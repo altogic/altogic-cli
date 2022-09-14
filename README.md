@@ -1,0 +1,2 @@
+# altogic-cli
+Altogic CLI
