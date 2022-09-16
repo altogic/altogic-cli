@@ -1,0 +1,30 @@
+{
+  "name": "altogic-cli",
+  "version": "1.0.0",
+  "description": "Altogic is a powerful backend as a service platform.\nHelping developers design, deploy and manage scalable backend apps.",
+  "main": "index.js",
+  "bin": {
+    "altogic": "node ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/altogic/altogic-cli.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/altogic/altogic-cli/issues"
+  },
+  "homepage": "https://github.com/altogic/altogic-cli#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cli-table3": "^0.6.2",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "ignore": "^5.2.0",
+    "inquirer": "^8.2.4",
+    "tar": "^6.1.11"
+  }
+}
