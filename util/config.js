@@ -2,11 +2,16 @@ const os = require("os");
 const fs = require("fs");
 const _path = require("path");
 
-const CONFIG_FILE_PATH = ".altogic/config.json";
+const constants = {
+	globalConfigFile: ".altogic/config.json",
+	configFile: "altogic.json",
+	baseUrl: "http://api.development.test",
+	codeFile: "function-code.tar.gz",
+};
 
-class CLIConfig {
-	constructor() {
-		this.path = `${os.homedir()}/${CONFIG_FILE_PATH}`;
+class ConfigManager {
+	constructor(path, configFile = constants.configFile) {
+		this.path = `${path}/${configFile}`;
 		this.read();
 	}
 
@@ -45,13 +50,15 @@ class CLIConfig {
 		this.config = {};
 		this.write();
 	}
+
+	setConfig(config) {
+		this.config = config;
+		this.write();
+	}
 }
 
-const constants = {
-	baseUrl: "http://api.development.test",
-};
-
 module.exports = {
-	config: new CLIConfig(),
+	config: new ConfigManager(os.homedir(), constants.globalConfigFile),
 	constants,
+	ConfigManager,
 };

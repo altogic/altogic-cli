@@ -1,8 +1,9 @@
 const chalk = require("chalk");
 const Table = require("cli-table3");
+const ora = require("ora");
 
-const log = (message) => {
-	console.log(message);
+const log = (message1, message2, message3) => {
+	console.log(message1, message2 ?? "", message3 ?? "");
 };
 
 const success = (message) => {
@@ -10,9 +11,18 @@ const success = (message) => {
 };
 
 const error = (message) => {
-	console.error(
-		`${chalk.bgRed.white.bold("✗ Error")} ${chalk.red(message ?? "")}`
-	);
+	if (Array.isArray(message)) {
+		message.forEach((entry) =>
+			console.error(
+				`${chalk.red.bold("✗ Error")} ${chalk.red(entry.msg ?? "")}`
+			)
+		);
+	} else
+		console.error(`${chalk.red.bold("✗ Error")} ${chalk.red(message ?? "")}`);
+};
+
+const info = (message) => {
+	console.log(`${chalk.cyan.bold("ℹ Info")} ${chalk.cyan(message ?? "")}`);
 };
 
 const vTable = (object) => {
@@ -72,4 +82,31 @@ const hTable = (headers, rows) => {
 	log(table.toString());
 };
 
-module.exports = { log, success, error, vTable, hTable };
+const progress = (text) => {
+	return ora(text).start();
+};
+
+const start = (spinner, text) => {
+	spinner.start(text);
+};
+
+const stop = (spinner) => {
+	spinner.stop();
+};
+
+const stopSuccess = (spinner, text) => {
+	spinner.succeed(text);
+};
+
+module.exports = {
+	log,
+	success,
+	error,
+	info,
+	progress,
+	start,
+	stop,
+	stopSuccess,
+	vTable,
+	hTable,
+};

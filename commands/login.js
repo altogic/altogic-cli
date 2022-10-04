@@ -12,7 +12,7 @@ const {
 	loginUserCode,
 	isError,
 } = require("../util/api");
-const { error, success, log } = require("../util/render");
+const { error, success, log, progress, stop } = require("../util/render");
 const { config } = require("../util/config");
 
 const login = new Command("login")
@@ -24,17 +24,22 @@ const login = new Command("login")
 		if (isError(response))
 			return error(response.data.message || response.data.details);
 
+		let spinner = null;
 		if (response.data.oAuthLogin) {
 			log(descriptions.codeSent);
 			const { code } = await inquirer.prompt(questionLoginCode);
+			spinner = progress("Signing in...");
 			response = await loginUserCode(email, code);
 		} else {
 			const { password } = await inquirer.prompt(questionLoginPassword);
+			spinner = progress("Signing in...");
 			response = await loginUserPwd(email, password);
 		}
 
-		if (isError(response))
+		if (isError(response)) {
+			stop(spinner);
 			return error(response.data.message || response.data.details);
+		}
 
 		//Check to see if the current user is different than the logged in one
 		let userId = config.get("userId");
@@ -45,6 +50,7 @@ const login = new Command("login")
 		config.set("username", response.data.profile.userName);
 		config.set("token", response.data.token);
 
+		stop(spinner);
 		success();
 	});
 
