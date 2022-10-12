@@ -1,5 +1,6 @@
 const { Command } = require("commander");
 const { descriptions } = require("../util/descriptions");
+const inquirer = require("inquirer");
 const {
 	getApps,
 	getEnvs,
@@ -11,6 +12,7 @@ const {
 } = require("../util/api");
 const { error, log, hTable } = require("../util/render");
 const { config, ConfigManager } = require("../util/config");
+const { questionSelectApp } = require("../util/questions");
 
 const get = new Command("get").description(descriptions.get);
 
@@ -50,8 +52,18 @@ const getEnvsAction = async (options) => {
 
 	let appId = options?.app ?? config.get("appId");
 	if (!appId) {
-		return error(descriptions.missingAppId);
+		const response = await getApps();
+		if (isError(response))
+			return error(response.data.message || response.data.details);
+
+		if (response.data.length === 0) return log(descriptions.noApps);
+
+		const answer = await inquirer.prompt(
+			questionSelectApp(response.data, descriptions.selectAppMsg)
+		);
+		appId = answer.appId;
 	}
+
 	const response = await getEnvs(appId);
 	if (isError(response))
 		return error(response.data.message || response.data.details);
@@ -87,8 +99,18 @@ const getFunctionsAction = async (options) => {
 
 	let appId = options?.app ?? config.get("appId");
 	if (!appId) {
-		return error(descriptions.missingAppId);
+		const response = await getApps();
+		if (isError(response))
+			return error(response.data.message || response.data.details);
+
+		if (response.data.length === 0) return log(descriptions.noApps);
+
+		const answer = await inquirer.prompt(
+			questionSelectApp(response.data, descriptions.selectAppMsg)
+		);
+		appId = answer.appId;
 	}
+
 	const response = await getFunctions(appId);
 	if (isError(response))
 		return error(response.data.message || response.data.details);
@@ -190,10 +212,9 @@ const getDeploymentsAction = async (options) => {
 		})
 		.map((entry) => {
 			return {
-				envId: entry.envId,
+				deploymentId: entry._id,
 				envName: entry.envName,
-				buildId: entry.buildId,
-				version: entry.version,
+				buildVersion: entry.version,
 				runtime: entry.runtime,
 				status: entry.status,
 				deployedAt: entry.createdAt,
@@ -202,10 +223,9 @@ const getDeploymentsAction = async (options) => {
 
 	hTable(
 		[
-			"envId",
+			"deploymentId",
 			"env name",
-			"buildId",
-			"version",
+			"build version",
 			"runtime",
 			"status",
 			"deployedAt",

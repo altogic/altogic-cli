@@ -5,7 +5,7 @@ const _path = require("path");
 const constants = {
 	globalConfigFile: ".altogic/config.json",
 	configFile: "altogic.json",
-	baseUrl: "http://api.development.test",
+	baseUrl: "https://api.altogic.com",
 	codeFile: "function-code.tar.gz",
 };
 

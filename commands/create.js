@@ -75,21 +75,21 @@ const createFunctionAction = async () => {
 	try {
 		childProcess.execSync(gitInitCommands, { stdio: "pipe", cwd: functionDir });
 		childProcess.execSync(gitPullCommands, { stdio: "pipe", cwd: functionDir });
-	} catch (error) {
-		if (error.message.includes("error: unknown option")) {
+	} catch (err) {
+		if (err.message.includes("error: unknown option")) {
 			stop(spinner);
-			return error(descriptions.unknownOption(error.message));
+			return error(descriptions.unknownOption(err.message));
 		} else if (
-			error.message.includes(
+			err.message.includes(
 				"is not recognized as an internal or external command,"
 			) ||
-			error.message.includes("command not found")
+			err.message.includes("command not found")
 		) {
 			stop(spinner);
-			return error(descriptions.gitNotInstalled(error.message));
+			return error(descriptions.gitNotInstalled(err.message));
 		} else {
 			stop(spinner);
-			return error(error.message);
+			return error(err.message);
 		}
 	}
 

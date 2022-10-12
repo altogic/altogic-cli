@@ -80,7 +80,7 @@ const descriptions = {
 	ignoringFiles: "Ignoring files in .gitignore",
 	config: `get logged in user info and manage app and environment configuration`,
 	configUpdated: "Configuration file updated",
-	create: `create a new app, environment or function`,
+	create: `create a function`,
 	apply: `deploy an existing build of the function to an environment`,
 	build: `create the build image of the function`,
 	deploy: `create and deploy the build image of the function`,
@@ -98,7 +98,7 @@ const descriptions = {
 	getEnv: "get current-environment from the configuration file",
 	getUser: "get current user information",
 	main: chalk.cyan(`${name}${description}`),
-	selectAppMsg: "Which app do you want to work on?",
+	selectAppMsg: "Please select your application",
 	selectAppFuncMsg: "To which application do you want to add the new function?",
 	clearApp: "clears the current-app setting from the configuration file",
 	clearEnv:
