@@ -144,7 +144,7 @@ const getBuildsAction = async (options) => {
 
 	let funcConfig = new ConfigManager(process.cwd());
 
-	let appId = funcConfig.get("appId");
+	let appId = options?.app || funcConfig.get("appId") || config.get("appId");
 	if (!appId) {
 		return error(descriptions.missingAppId);
 	}

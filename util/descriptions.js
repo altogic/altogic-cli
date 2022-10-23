@@ -36,6 +36,12 @@ const descriptions = {
 	)} or ${chalk.bold(
 		"--func"
 	)} option or run this command in a function folder with an altogic.json configuration file.`,
+	missingBuildId: `You need to specify the build id as an argument to ${chalk.bold(
+		"altogic logs build <build id>"
+	)}.`,
+	missingDeploymentId: `You need to specify the deployment id as an argument to ${chalk.bold(
+		"altogic logs build <deployment id>"
+	)}.`,
 	missingConfigFile: `Missing configuration file ${chalk.bold(
 		constants.configFile
 	)}. You need to run the command within the directory of the function where the configuration file exists.`,
@@ -92,6 +98,10 @@ const descriptions = {
 	get: `get app, env and function info from Altogic backend`,
 	login: `authenticate your Altogic account`,
 	logout: `logout of your Altogic account`,
+	logs: "get function build and deployment logs",
+	buildLogs: "get the logs of a function build",
+	deploymentLogs: "get the logs of a function deployment",
+	gettingLogFile: "Getting log file",
 	setApp: "sets the current-app in the configuration file",
 	setEnv: "sets the current-environment in the configuration file",
 	getApp: "get current-app from the configuration file",

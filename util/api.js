@@ -149,6 +149,38 @@ const getFunctionBuilds = async (appId, functionId) => {
 	}
 };
 
+const getFunctionBuildLogs = async (appId, functionId, buildId) => {
+	try {
+		let result = await axios.get(
+			`/users/${config.get(
+				"userId"
+			)}/apps/${appId}/functions/${functionId}/builds/${buildId}/logs`,
+			{
+				headers: { Authorization: config.get("token") },
+			}
+		);
+		return result;
+	} catch (err) {
+		return err.response;
+	}
+};
+
+const getFunctionDeploymentLogs = async (appId, functionId, deploymentId) => {
+	try {
+		let result = await axios.get(
+			`/users/${config.get(
+				"userId"
+			)}/apps/${appId}/functions/${functionId}/deployments/${deploymentId}/logs`,
+			{
+				headers: { Authorization: config.get("token") },
+			}
+		);
+		return result;
+	} catch (err) {
+		return err.response;
+	}
+};
+
 const getFunctionDeployments = async (appId, functionId) => {
 	try {
 		let result = await axios.get(
@@ -266,4 +298,6 @@ module.exports = {
 	deployFunction,
 	applyFunction,
 	undeployFunction,
+	getFunctionBuildLogs,
+	getFunctionDeploymentLogs,
 };
