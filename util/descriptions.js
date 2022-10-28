@@ -95,6 +95,8 @@ const descriptions = {
 	apps: "get list of apps of the logged in user",
 	envs: "get the environments of an app",
 	functions: "get the functions of an app",
+	builds: "get the builds of a function",
+	deployments: "get the deployments of a function",
 	get: `get app, env and function info from Altogic backend`,
 	login: `authenticate your Altogic account`,
 	logout: `logout of your Altogic account`,
@@ -110,6 +112,7 @@ const descriptions = {
 	main: chalk.cyan(`${name}${description}`),
 	selectAppMsg: "Please select your application",
 	selectAppFuncMsg: "To which application do you want to add the new function?",
+	start: "start local development http server",
 	clearApp: "clears the current-app setting from the configuration file",
 	clearEnv:
 		"clears the current-environment setting from the configuration file",
@@ -119,6 +122,14 @@ const descriptions = {
 	uploadingCode: "Uploading file",
 	applyingBuild: "Applying build",
 	undeployingFunction: "Undeploying function",
+	invalidPortNumber: (portNumber) =>
+		`Specified port number '${portNumber}' is not valid`,
+	localServerRunning: (portNumber) =>
+		`Local development HTTP server running at port:${portNumber}.\nYou can now test your function using the following endpoint: ${chalk.bold(
+			`http://localhost:${portNumber}`
+		)}`,
+	portOutofBounds: (portNumber) =>
+		`Port should be >= 0 and < 65536. Received ${portNumber}`,
 	missingEntryFile: (entrypoint) =>
 		`The entrypoint file (${entrypoint}) specified in ${chalk.bold(
 			constants.configFile
@@ -127,6 +138,7 @@ const descriptions = {
 		`The runtime (${chalk.bold(
 			runtime
 		)}) is invalid. Supported runtimes are the following: ${runtimes}`,
+	fetchingApps: "Fetching apps...",
 };
 
 module.exports = { descriptions };

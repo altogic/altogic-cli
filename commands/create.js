@@ -19,9 +19,13 @@ const createFunctionAction = async () => {
 	if (!isLoggedIn()) return error(descriptions.needLogin);
 
 	let appId = config.get("appId");
+
 	//Check to see if we have the current-app info in configuration file
 	if (!appId) {
+		const spinner = progress(descriptions.fetchingApps);
 		const response = await getApps();
+		stop(spinner);
+
 		if (isError(response))
 			return error(response.data.message || response.data.details);
 

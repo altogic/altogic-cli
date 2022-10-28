@@ -40,6 +40,21 @@ const loginUserCode = async (email, code) => {
 	}
 };
 
+const logoutUser = async () => {
+	try {
+		let result = await axios.post(
+			`/users/${config.get("userId")}/logout`,
+			null,
+			{
+				headers: { Authorization: config.get("token") },
+			}
+		);
+		return result;
+	} catch (err) {
+		return err.response;
+	}
+};
+
 const getApps = async () => {
 	try {
 		let result = await axios.get(`/users/${config.get("userId")}/apps`, {
@@ -285,6 +300,7 @@ module.exports = {
 	initializeLogin,
 	loginUserPwd,
 	loginUserCode,
+	logoutUser,
 	getApps,
 	getApp,
 	getEnvs,

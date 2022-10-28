@@ -12,6 +12,7 @@ const { deploy } = require("./commands/deploy");
 const { apply } = require("./commands/apply");
 const { undeploy } = require("./commands/undeploy");
 const { logs } = require("./commands/logs");
+const { start } = require("./commands/start");
 
 program
 	.description(descriptions.main)
@@ -26,5 +27,6 @@ program
 	.addCommand(login)
 	.addCommand(logout)
 	.addCommand(logs)
+	.addCommand(start)
 	.addCommand(undeploy)
 	.parse(process.argv);

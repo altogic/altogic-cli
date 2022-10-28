@@ -10,7 +10,7 @@ const {
 	isLoggedIn,
 	isError,
 } = require("../util/api");
-const { error, log, hTable } = require("../util/render");
+const { error, log, hTable, progress, stop } = require("../util/render");
 const { config, ConfigManager } = require("../util/config");
 const { questionSelectApp } = require("../util/questions");
 
@@ -19,7 +19,9 @@ const get = new Command("get").description(descriptions.get);
 const getAppsAction = async () => {
 	if (!isLoggedIn()) return error(descriptions.needLogin);
 
+	const spinner = progress(descriptions.fetchingApps);
 	const response = await getApps();
+	stop(spinner);
 	if (isError(response))
 		return error(response.data.message || response.data.details);
 
@@ -52,7 +54,9 @@ const getEnvsAction = async (options) => {
 
 	let appId = options?.app ?? config.get("appId");
 	if (!appId) {
+		const spinner = progress(descriptions.fetchingApps);
 		const response = await getApps();
+		stop(spinner);
 		if (isError(response))
 			return error(response.data.message || response.data.details);
 
@@ -99,7 +103,9 @@ const getFunctionsAction = async (options) => {
 
 	let appId = options?.app ?? config.get("appId");
 	if (!appId) {
+		const spinner = progress(descriptions.fetchingApps);
 		const response = await getApps();
+		stop(spinner);
 		if (isError(response))
 			return error(response.data.message || response.data.details);
 
@@ -248,14 +254,14 @@ get
 
 get
 	.command("builds")
-	.description(descriptions.functions)
+	.description(descriptions.builds)
 	.option("-a, --app [appId]", "application id")
 	.option("-f, --func [functionId]", "function id")
 	.action(getBuildsAction);
 
 get
 	.command("deployments")
-	.description(descriptions.functions)
+	.description(descriptions.deployments)
 	.option("-a, --app [appId]", "application id")
 	.option("-f, --func [functionId]", "function id")
 	.action(getDeploymentsAction);

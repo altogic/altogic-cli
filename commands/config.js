@@ -2,7 +2,14 @@ const { Command } = require("commander");
 const inquirer = require("inquirer");
 const { descriptions } = require("../util/descriptions");
 const { config } = require("../util/config");
-const { success, error, log, vTable } = require("../util/render");
+const {
+	success,
+	error,
+	log,
+	vTable,
+	progress,
+	stop,
+} = require("../util/render");
 const {
 	getApp,
 	getApps,
@@ -112,7 +119,9 @@ configCommand
 
 		//The appId is optional, if appId is not provided then list the apps of the user and ask the user to select one of them
 		if (!appId) {
+			const spinner = progress(descriptions.fetchingApps);
 			const response = await getApps();
+			stop(spinner);
 			if (isError(response))
 				return error(response.data.message || response.data.details);
 
