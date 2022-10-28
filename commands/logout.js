@@ -8,9 +8,7 @@ const logout = new Command("logout")
 	.description(descriptions.logout)
 	.action(async () => {
 		if (isLoggedIn()) {
-			console.log("***here");
 			let result = await logoutUser();
-			console.log("***result", result);
 		}
 
 		config.clear();
