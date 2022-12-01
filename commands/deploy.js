@@ -20,6 +20,7 @@ const {
 	start,
 	stop,
 	stopSuccess,
+	log,
 } = require("../util/render");
 const { ConfigManager, constants, config } = require("../util/config");
 const { getFiles } = require("../util/core");

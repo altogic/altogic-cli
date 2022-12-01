@@ -1,11 +1,20 @@
 const fs = require("fs");
 const path = require("path");
+const chalk = require("chalk");
 const childProcess = require("child_process");
 const { Command } = require("commander");
 const inquirer = require("inquirer");
 const { descriptions } = require("../util/descriptions");
 const { getApps, createFunction, isLoggedIn, isError } = require("../util/api");
-const { error, log, success, progress, stop } = require("../util/render");
+const {
+	error,
+	log,
+	success,
+	progress,
+	stop,
+	step,
+	info,
+} = require("../util/render");
 const { config, ConfigManager } = require("../util/config");
 const {
 	questionSelectApp,
@@ -118,6 +127,13 @@ const createFunctionAction = async () => {
 
 	stop(spinner);
 	success();
+	log("\nNext steps:");
+	step(1, `cd ${funcName}`);
+	step(2, `npm install`);
+	step(3, `git init && git add -A && git commit -m "Initial commit"`);
+	step(4, "altogic start");
+	log("");
+	log(`To close the dev server, hit ${chalk.bold.cyan("Ctrl-C")}\n`);
 };
 
 create

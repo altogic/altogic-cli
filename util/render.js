@@ -25,6 +25,10 @@ const info = (message) => {
 	console.log(`${chalk.cyan.bold("ℹ Info")} ${chalk.cyan(message ?? "")}`);
 };
 
+const step = (step, message) => {
+	console.log(`  ${step}: ${chalk.bold.cyan(message ?? "")}`);
+};
+
 const vTable = (object) => {
 	let table = new Table({
 		chars: {
@@ -109,4 +113,5 @@ module.exports = {
 	stopSuccess,
 	vTable,
 	hTable,
+	step,
 };
